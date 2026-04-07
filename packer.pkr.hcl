@@ -8,6 +8,11 @@ variable "prometheus_version" {
   default = "1.2.4"
 }
 
+variable "tr_version" {
+  type    = string
+  default = "5.2"
+}
+
 source "docker" "debian-amd64" {
   commit = true
   image  = "debian:13"
@@ -153,7 +158,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "git clone https://github.com/TrunkRecorder/trunk-recorder.git /tmp/trunk-recorder",
+      "git clone https://github.com/TrunkRecorder/trunk-recorder.git -b ${var.tr_version} /tmp/trunk-recorder",
       "mkdir /tmp/trunk-recorder-build",
       "cmake ../trunk-recorder",
       "make",
