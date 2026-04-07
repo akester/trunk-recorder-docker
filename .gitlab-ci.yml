@@ -1,0 +1,32 @@
+variables:
+  PKR_VAR_version: $CI_COMMIT_BRANCH
+
+stages:
+  - build
+  - deploy
+
+build-x86:
+  stage: build
+  tags:
+    - exec
+  script:
+    - make build-x86
+    - make push-x86
+
+build-arm:
+  stage: build
+  tags:
+    - exec-arm
+  script:
+    - make build-arm
+    - make push-arm
+
+push-manifest:
+  stage: deploy
+  tags:
+    - exec
+  dependencies:
+    - build-x86
+    - build-arm
+  script:
+    - make push-manifest
