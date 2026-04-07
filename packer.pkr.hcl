@@ -158,7 +158,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "git clone https://github.com/TrunkRecorder/trunk-recorder.git -b ${var.tr_version} /tmp/trunk-recorder",
+      "git clone https://github.com/TrunkRecorder/trunk-recorder.git -b v${var.tr_version} /tmp/trunk-recorder",
       "mkdir /tmp/trunk-recorder-build",
       "cmake ../trunk-recorder",
       "make",
