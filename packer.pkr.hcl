@@ -150,7 +150,6 @@ build {
       "cd /tmp/prometheus-plugin",
       "mkdir build && cd build",
       "cmake ..",
-      "make",
       "sudo make install",
       "mv /tmp/gnuradio-runtime.conf /etc/gnuradio/conf.d/gnuradio-runtime.conf",
     ]
