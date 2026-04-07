@@ -159,7 +159,7 @@ build {
       "set -e",
       "set -x",
       "git clone https://github.com/TrunkRecorder/trunk-recorder.git -b v${var.tr_version} /tmp/trunk-recorder",
-      "mkdir /tmp/trunk-recorder-build",
+      "mkdir /tmp/trunk-recorder-build && cd /tmp/trunk-recorder-build",
       "cmake ../trunk-recorder",
       "make",
       "make install",
