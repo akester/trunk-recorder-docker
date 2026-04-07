@@ -45,36 +45,36 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
-  # # Build prometheus
-  # provisioner "shell" {
-  #   environment_vars = [
-  #     "DEBIAN_FRONTEND=noninteractive",
-  #     "DEBIAN_PRIORITY=critical"
-  #   ]
-  #   inline           = [
-  #     "set -e",
-  #     "set -x",
-  #     "apt-get install -y curl git cmake build-essential file zlib1g-dev",
-  #   ]
-  #   inline_shebang   = "/bin/bash -e"
-  # }
-  # provisioner "shell" {
-  #   inline           = [
-  #     "set -e",
-  #     "set -x",
-  #     "git clone https://github.com/jupp0r/prometheus-cpp -b v${var.prometheus_version} /tmp/prometheus-cpp",
-  #     "cd /tmp/prometheus-cpp",
-  #     "git submodule init && git submodule update",
-  #     "mkdir build && cd build",
-  #     "cmake -DCPACK_GENERATOR=DEB -DBUILD_SHARED_LIBS=ON -DENABLE_PUSH=OFF -DENABLE_COMPRESSION=ON ..",
-  #     "cmake --build . --target package --parallel $(nproc)",
-  #     "mv prometheus-cpp_*.deb /prometheus-cpp.deb",
-  #     "cd -",
-  #     "rm -rf /tmp/prometheus-cpp",
-  #     "dpkg -i /prometheus-cpp.deb",
-  #   ]
-  #   inline_shebang   = "/bin/bash -e"
-  # }
+  # Build prometheus
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "apt-get install -y curl git cmake build-essential file zlib1g-dev",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+  provisioner "shell" {
+    inline           = [
+      "set -e",
+      "set -x",
+      "git clone https://github.com/jupp0r/prometheus-cpp -b v${var.prometheus_version} /tmp/prometheus-cpp",
+      "cd /tmp/prometheus-cpp",
+      "git submodule init && git submodule update",
+      "mkdir build && cd build",
+      "cmake -DCPACK_GENERATOR=DEB -DBUILD_SHARED_LIBS=ON -DENABLE_PUSH=OFF -DENABLE_COMPRESSION=ON ..",
+      "cmake --build . --target package --parallel $(nproc)",
+      "mv prometheus-cpp_*.deb /prometheus-cpp.deb",
+      "cd -",
+      "rm -rf /tmp/prometheus-cpp",
+      "dpkg -i /prometheus-cpp.deb",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
 
   # # Build FDK-AAC
   # provisioner "shell" {
