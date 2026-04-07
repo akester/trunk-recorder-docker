@@ -146,7 +146,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y  git cmake make libssl-dev build-essential gnuradio-dev libuhd-dev libcurl4-openssl-dev libsndfile1-dev",
+      "apt-get install -y  git cmake make libssl-dev build-essential gnuradio-dev libuhd-dev libcurl4-openssl-dev libsndfile1-dev libboost-log-dev",
     ]
     inline_shebang   = "/bin/bash -e"
   }
