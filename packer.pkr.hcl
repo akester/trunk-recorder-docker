@@ -127,6 +127,7 @@ build {
   }
 
   # Build Prometheus Plugin
+
   provisioner "shell" {
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive",
@@ -135,13 +136,11 @@ build {
     inline           = [
       "set -e",
       "set -x",
+      # This file hold up apt, so move it out of the way and then put it back after we install our deps
+      "mv /etc/gnuradio/conf.d/gnuradio-runtime.conf /tmp/gnuradio-runtime.conf",
       "apt-get install -y --no-install-recommends --no-install-suggests -y git cmake make libssl-dev build-essential gnuradio-dev libuhd-dev libcurl4-openssl-dev libsndfile1-dev",
     ]
     inline_shebang   = "/bin/bash -e"
-  }
-  provisioner "file" {
-    source = "gnuradio-runtime.conf"
-    destination = "/tmp/gnuradio-runtime.conf"
   }
   provisioner "shell" {
     inline           = [
