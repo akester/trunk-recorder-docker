@@ -150,7 +150,7 @@ build {
       "cd /tmp/prometheus-plugin",
       "mkdir build && cd build",
       "cmake ..",
-      "sudo make install",
+      "make install",
       "mv /tmp/gnuradio-runtime.conf /etc/gnuradio/conf.d/gnuradio-runtime.conf",
     ]
     inline_shebang   = "/bin/bash -e"
