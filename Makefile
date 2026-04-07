@@ -1,4 +1,4 @@
-IMAGE_NAME=akester/logrotate
+IMAGE_NAME=akester/trunk-recorder
 
 build-x86: init
 	packer build --only=docker.tr-amd64 .
