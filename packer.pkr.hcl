@@ -62,7 +62,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "git clone https://github.com/mstorsjo/fdk-aac /tmp/fdk-aac",
+      "git clone https://github.com/mstorsjo/fdk-aac.git /tmp/fdk-aac",
       "cd /tmp/fdk-aac",
       "autoreconf -fiv",
       "./configure --enable-shared",
