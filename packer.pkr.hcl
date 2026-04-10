@@ -176,8 +176,8 @@ build {
       "rm -rfv /tmp/*",
       "rm -rfv /var/lib/apt/lists/*",
       "apt-get purge -y build-essential cmake apt-transport-https git software-properties-common",
-      "apt-get autoremove --purge",
-      "apt-get autoclean",
+      "apt-get autoremove -y --purge",
+      "apt-get autoclean -y",
     ]
     inline_shebang   = "/bin/bash -e"
   }
