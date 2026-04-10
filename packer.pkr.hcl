@@ -134,7 +134,7 @@ build {
       "git clone https://github.com/TrunkRecorder/trunk-recorder.git -b ${var.tr_version} /tmp/trunk-recorder",
       "mkdir /tmp/trunk-build && cd /tmp/trunk-build",
       "cmake ../trunk-recorder",
-      "make",
+      "make -j4",
       "make install"
     ]
     inline_shebang   = "/bin/bash -e"
