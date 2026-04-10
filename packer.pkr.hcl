@@ -17,12 +17,20 @@ source "docker" "tr-amd64" {
   commit = true
   image  = "ubuntu:24.04"
   platform = "linux/amd64"
+  changes = [
+    "CMD [\"/bin/sh\", \"-c\", \"trunk-recorder --config=/app/config.json\"]",
+    "WORKDIR [\"/app\"]",
+  ]
 }
 
 source "docker" "tr-arm64" {
   commit = true
   image  = "ubuntu:24.04"
   platform = "linux/arm64"
+  changes = [
+    "CMD [\"/bin/sh\", \"-c\", \"trunk-recorder --config=/app/config.json\"]",
+    "WORKDIR [\"/app\"]",
+  ]
 }
 
 build {
