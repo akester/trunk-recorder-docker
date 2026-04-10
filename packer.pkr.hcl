@@ -140,7 +140,7 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
-  # Build prometheus
+  # Build in the MQTT plugin
   provisioner "shell" {
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive",
@@ -149,7 +149,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests curl git cmake build-essential file zlib1g-dev",
+      "apt-get install -y --no-install-recommends --no-install-suggests libpaho-mqtt-dev libpaho-mqttpp-dev",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -157,45 +157,11 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "git clone https://github.com/jupp0r/prometheus-cpp -b v${var.prometheus_version} /tmp/prometheus-cpp",
-      "cd /tmp/prometheus-cpp",
-      "git submodule init && git submodule update",
-      "mkdir build && cd build",
-      "cmake -DCPACK_GENERATOR=DEB -DBUILD_SHARED_LIBS=ON -DENABLE_PUSH=OFF -DENABLE_COMPRESSION=ON ..",
-      "cmake --build . --target package --parallel $(nproc)",
-      "mv prometheus-cpp_*.deb /prometheus-cpp.deb",
-      "cd -",
-      "rm -rf /tmp/prometheus-cpp",
-      "dpkg -i /prometheus-cpp.deb",
-    ]
-    inline_shebang   = "/bin/bash -e"
-  }
-
-  # Build Prometheus Plugin
-  provisioner "shell" {
-    environment_vars = [
-      "DEBIAN_FRONTEND=noninteractive",
-      "DEBIAN_PRIORITY=critical"
-    ]
-    inline           = [
-      "set -e",
-      "set -x",
-      # This file hold up apt, so move it out of the way and then put it back after we install our deps
-      "mv /etc/gnuradio/conf.d/gnuradio-runtime.conf /tmp/gnuradio-runtime.conf",
-      "apt-get install -y --no-install-recommends --no-install-suggests git cmake make libssl-dev build-essential gnuradio-dev libuhd-dev libcurl4-openssl-dev libsndfile1-dev",
-    ]
-    inline_shebang   = "/bin/bash -e"
-  }
-  provisioner "shell" {
-    inline           = [
-      "set -e",
-      "set -x",
-      "git clone https://github.com/USA-RedDragon/trunk-recorder-prometheus.git /tmp/prometheus-plugin",
-      "cd /tmp/prometheus-plugin",
-      "mkdir build && cd build",
-      "cmake ..",
-      "make install",
-      "mv /tmp/gnuradio-runtime.conf /etc/gnuradio/conf.d/gnuradio-runtime.conf",
+      "cd /tmp/trunk-recorder/user_plugins",
+      "git clone https://github.com/TrunkRecorder/tr-plugin-mqtt",
+      "cd /tmp/trunk-build",
+      "cmake ../trunk-recorder",
+      "make install"
     ]
     inline_shebang   = "/bin/bash -e"
   }
