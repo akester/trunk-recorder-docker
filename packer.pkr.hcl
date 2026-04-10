@@ -54,15 +54,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests \
-          curl \
-          git \
-          cmake \
-          build-essential \
-          autoconf \
-          automake \
-          autotools-dev \
-          libtool",
+      "apt-get install -y --no-install-recommends --no-install-suggests curl git cmake build-essential autoconf automake autotools-dev libtool",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -89,11 +81,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests \
-          libssl-dev \
-          libcurl4-openssl-dev \
-          sox \
-          chrony",
+      "apt-get install -y --no-install-recommends --no-install-suggests libssl-dev libcurl4-openssl-dev sox chrony",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -107,9 +95,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests \
-          python3-minimal \
-          lame",
+      "apt-get install -y --no-install-recommends --no-install-suggests python3-minimal lame",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -123,31 +109,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests \
-          apt-transport-https \
-          build-essential \
-          ca-certificates \
-          ffmpeg \
-          git \
-          gnupg \
-          gnuradio \
-          gnuradio-dev \
-          gr-osmosdr \
-          libuhd-dev \
-          libboost-all-dev \
-          libcurl4-openssl-dev \
-          libgmp-dev \
-          libhackrf-dev \
-          liborc-0.4-dev \
-          libpthread-stubs0-dev \
-          libssl-dev \
-          libusb-dev \
-          pkg-config \
-          software-properties-common \
-          cmake \
-          libsndfile1-dev \
-          gr-osmosdr \
-          libosmosdr0",
+      "apt-get install -y --no-install-recommends --no-install-suggests apt-transport-https build-essential ca-certificates ffmpeg git gnupg gnuradio gnuradio-dev gr-osmosdr libuhd-dev libboost-all-dev libcurl4-openssl-dev libgmp-dev libhackrf-dev liborc-0.4-dev libpthread-stubs0-dev libssl-dev libusb-dev pkg-config software-properties-common cmake libsndfile1-dev gr-osmosdr libosmosdr0",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -173,13 +135,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests \
-          curl \
-          git \
-          cmake \
-          build-essential \
-          file \
-          zlib1g-dev",
+      "apt-get install -y --no-install-recommends --no-install-suggests curl git cmake build-essential file zlib1g-dev",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -212,16 +168,7 @@ build {
       "set -x",
       # This file hold up apt, so move it out of the way and then put it back after we install our deps
       "mv /etc/gnuradio/conf.d/gnuradio-runtime.conf /tmp/gnuradio-runtime.conf",
-      "apt-get install -y --no-install-recommends --no-install-suggests \
-          git \
-          cmake \
-          make \
-          libssl-dev \
-          build-essential \
-          gnuradio-dev \
-          libuhd-dev \
-          libcurl4-openssl-dev \
-          libsndfile1-dev",
+      "apt-get install -y --no-install-recommends --no-install-suggests git cmake make libssl-dev build-essential gnuradio-dev libuhd-dev libcurl4-openssl-dev libsndfile1-dev",
     ]
     inline_shebang   = "/bin/bash -e"
   }
