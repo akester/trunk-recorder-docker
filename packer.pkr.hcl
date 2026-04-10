@@ -10,13 +10,13 @@ variable "prometheus_version" {
 
 source "docker" "tr-amd64" {
   commit = true
-  image  = "robotastic/trunk-recorder:latest"
+  image  = "ubuntu:24.04"
   platform = "linux/amd64"
 }
 
 source "docker" "tr-arm64" {
   commit = true
-  image  = "robotastic/trunk-recorder:latest"
+  image  = "ubuntu:24.04"
   platform = "linux/arm64"
 }
 
@@ -49,7 +49,15 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y curl git cmake build-essential autoconf automake autotools-dev libtool",
+      "apt-get install -y --no-install-recommends --no-install-suggests \
+          curl \
+          git \
+          cmake \
+          build-essential \
+          autoconf \
+          automake \
+          autotools-dev \
+          libtool",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -76,7 +84,11 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y libssl-dev libcurl4-openssl-dev sox chrony",
+      "apt-get install -y --no-install-recommends --no-install-suggests \
+          libssl-dev \
+          libcurl4-openssl-dev \
+          sox \
+          chrony",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -90,7 +102,59 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y python3-minimal lame",
+      "apt-get install -y --no-install-recommends --no-install-suggests \
+          python3-minimal \
+          lame",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+
+  # Build Trunk Recorder
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "apt-get install -y --no-install-recommends --no-install-suggests \
+          apt-transport-https \
+          build-essential \
+          ca-certificates \
+          ffmpeg \
+          git \
+          gnupg \
+          gnuradio \
+          gnuradio-dev \
+          gr-osmosdr \
+          libuhd-dev \
+          libboost-all-dev \
+          libcurl4-openssl-dev \
+          libgmp-dev \
+          libhackrf-dev \
+          liborc-0.4-dev \
+          libpthread-stubs0-dev \
+          libssl-dev \
+          libusb-dev \
+          pkg-config \
+          software-properties-common \
+          cmake \
+          libsndfile1-dev \
+          gr-osmosdr \
+          libosmosdr0",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+  provisioner "shell" {
+    inline           = [
+      "set -e",
+      "set -x",
+      "git clone https://github.com/TrunkRecorder/trunk-recorder.git /tmp/trunk-recorder",
+      "mkdir /tmp/trunk-build && cd /tmp/trunk-build",
+      "cmake ../trunk-recorder",
+      "make",
+      "make install"
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -104,7 +168,13 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y curl git cmake build-essential file zlib1g-dev",
+      "apt-get install -y --no-install-recommends --no-install-suggests \
+          curl \
+          git \
+          cmake \
+          build-essential \
+          file \
+          zlib1g-dev",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -127,7 +197,6 @@ build {
   }
 
   # Build Prometheus Plugin
-
   provisioner "shell" {
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive",
@@ -138,7 +207,16 @@ build {
       "set -x",
       # This file hold up apt, so move it out of the way and then put it back after we install our deps
       "mv /etc/gnuradio/conf.d/gnuradio-runtime.conf /tmp/gnuradio-runtime.conf",
-      "apt-get install -y --no-install-recommends --no-install-suggests -y git cmake make libssl-dev build-essential gnuradio-dev libuhd-dev libcurl4-openssl-dev libsndfile1-dev",
+      "apt-get install -y --no-install-recommends --no-install-suggests \
+          git \
+          cmake \
+          make \
+          libssl-dev \
+          build-essential \
+          gnuradio-dev \
+          libuhd-dev \
+          libcurl4-openssl-dev \
+          libsndfile1-dev",
     ]
     inline_shebang   = "/bin/bash -e"
   }
