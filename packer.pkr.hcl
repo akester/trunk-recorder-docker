@@ -163,6 +163,24 @@ build {
     ]
     inline_shebang   = "/bin/bash -e"
   }
+
+  # Cleanup what we can
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "rm -rfv /tmp/*",
+      "rm -rfv /var/lib/apt/lists/*",
+      "apt-get purge -y build-essential cmake apt-transport-https git software-properties-common",
+      "apt-get autoremove --purge",
+      "apt-get autoclean",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
   
   post-processor "docker-tag" {
     repository = "akester/trunk-recorder"
