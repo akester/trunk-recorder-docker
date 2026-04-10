@@ -45,6 +45,20 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
+  # Common tools that can be bigger
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "apt-get install -y curl git cmake build-essential",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+
   # Build FDK-AAC
   provisioner "shell" {
     environment_vars = [
