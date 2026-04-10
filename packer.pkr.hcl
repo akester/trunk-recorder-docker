@@ -114,6 +114,20 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
+  # Deps for MQTT
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "apt-get install -y --no-install-recommends --no-install-suggests libpaho-mqtt-dev libpaho-mqttpp-dev",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+
   # Build Trunk Recorder
   provisioner "shell" {
     environment_vars = [
@@ -132,6 +146,8 @@ build {
       "set -e",
       "set -x",
       "git clone https://github.com/TrunkRecorder/trunk-recorder.git -b ${var.tr_version} /tmp/trunk-recorder",
+      "cd /tmp/trunk-recorder/user_plugins",
+      "git clone https://github.com/TrunkRecorder/tr-plugin-mqtt",
       "mkdir /tmp/trunk-build && cd /tmp/trunk-build",
       "cmake ../trunk-recorder",
       "make -j4",
@@ -139,33 +155,7 @@ build {
     ]
     inline_shebang   = "/bin/bash -e"
   }
-
-  # Build in the MQTT plugin
-  provisioner "shell" {
-    environment_vars = [
-      "DEBIAN_FRONTEND=noninteractive",
-      "DEBIAN_PRIORITY=critical"
-    ]
-    inline           = [
-      "set -e",
-      "set -x",
-      "apt-get install -y --no-install-recommends --no-install-suggests libpaho-mqtt-dev libpaho-mqttpp-dev",
-    ]
-    inline_shebang   = "/bin/bash -e"
-  }
-  provisioner "shell" {
-    inline           = [
-      "set -e",
-      "set -x",
-      "cd /tmp/trunk-recorder/user_plugins",
-      "git clone https://github.com/TrunkRecorder/tr-plugin-mqtt",
-      "cd /tmp/trunk-build",
-      "cmake ../trunk-recorder",
-      "make install"
-    ]
-    inline_shebang   = "/bin/bash -e"
-  }
-
+  
   post-processor "docker-tag" {
     repository = "akester/trunk-recorder"
     tags = [
