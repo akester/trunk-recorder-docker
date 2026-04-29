@@ -5,7 +5,7 @@ includes:
 
 * MQTT stats plugin: https://github.com/TrunkRecorder/tr-plugin-mqtt
 * A number of packages needed for Broadcastify calls.
-* A few missing libraries that my set up needed (fdk-aac namely)
+* A few missing libraries that my setup needed (fdk-aac namely)
 
 This is not a small image, but should be a nearly complete set up for a Trunk
 Recorder instance that wants to ship recordings to all the places.
@@ -45,4 +45,21 @@ services:
 
 ## Docs
 
-More docs for this are at https://docs.aikester.com/containers/trunk-recorder
+More docs for this are coming soon at
+https://docs.aikester.com/containers/trunk-recorder
+
+## Building
+
+This image is built via Packer and will build multiple architectures.  Because
+of the compiliation steps, I _highly_ reccomend just using some ARM hardware to
+do the ARM builds.
+
+It also has a Makefile, so on a x86 desktop, you can just run `make`.  `make
+build-arm` will build the ARM variant.
+
+## Mirror
+
+If you're looking at this repo at
+https://github.com/akester/trunk-recorder-docker, know that it's a mirror of my
+local code repository.  This repo is monitored though, so any pull requests or
+issues will be seen.
