@@ -39,6 +39,18 @@ build {
     "source.docker.tr-arm64"
   ]
 
+  # Use the local apt cache (amd64 only), removed at the end of the build
+  provisioner "shell" {
+    only = ["docker.tr-amd64"]
+    inline = [
+      "set -e",
+      "set -x",
+      "cp /etc/apt/sources.list.d/ubuntu.sources /root/ubuntu.sources.orig",
+      "sed -i -e 's#http://archive.ubuntu.com/ubuntu/#http://apt.kester.cloud/ubuntu/#' -e 's#http://security.ubuntu.com/ubuntu/#http://apt.kester.cloud/ubuntu-security/#' /etc/apt/sources.list.d/ubuntu.sources",
+    ]
+    inline_shebang = "/bin/bash -e"
+  }
+
   provisioner "shell" {
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive",
@@ -181,7 +193,19 @@ build {
     ]
     inline_shebang   = "/bin/bash -e"
   }
-  
+
+  # Remove the local apt cache
+  provisioner "shell" {
+    only = ["docker.tr-amd64"]
+    inline = [
+      "set -e",
+      "set -x",
+      "mv /root/ubuntu.sources.orig /etc/apt/sources.list.d/ubuntu.sources",
+      "rm -rf /var/lib/apt/lists/*",
+    ]
+    inline_shebang = "/bin/bash -e"
+  }
+
   post-processor "docker-tag" {
     repository = "akester/trunk-recorder"
     tags = [
