@@ -170,7 +170,7 @@ build {
       "git clone https://github.com/TrunkRecorder/tr-plugin-mqtt",
       "mkdir /tmp/trunk-build && cd /tmp/trunk-build",
       "cmake ../trunk-recorder",
-      "make -j4",
+      "make -j2",
       "make install"
     ]
     inline_shebang   = "/bin/bash -e"
