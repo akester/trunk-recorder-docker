@@ -1,6 +1,6 @@
 variables:
   PKR_VAR_version: $CI_COMMIT_BRANCH
-  PKR_VAR_tr_version: 'master'
+  PKR_VAR_tr_version: 'v5.2.1'
 
 stages:
   - build
